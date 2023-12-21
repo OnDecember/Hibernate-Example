@@ -26,7 +26,7 @@ public class EmployeeManager {
 
     public List<Employee> getEmployees() {
         try (Session session = factory.openSession()) {
-            Query<Employee> query = session.createQuery("SELECT * FROM Employee", Employee.class);
+            Query<Employee> query = session.createQuery("from Employee", Employee.class);
             return query.list();
         }
     }
@@ -34,7 +34,7 @@ public class EmployeeManager {
     public boolean updateEmployee(Employee employee) {
         try (Session session = factory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.update(employee);
+            session.merge(employee);
             transaction.commit();
             return true;
         } catch (Exception e) {
